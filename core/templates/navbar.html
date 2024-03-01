@@ -1,0 +1,44 @@
+{% load static %}
+<div id="sticky-header" class="menu-area">
+    <div class="container custom-container">
+        <div class="row">
+            <div class="col-12">
+                <div class="mobile-nav-toggler"><i class="fas fa-bars"></i></div>
+                <div class="menu-wrap">
+                    <nav class="menu-nav show">
+                        <div class="logo"><a class="h2 fw-bolder" href="{% url "home" %}">Fluffy Paw</a>
+                        </div>
+                        <div class="navbar-wrap main-menu d-none d-lg-flex">
+                            <ul class="navigation">
+                                <li class="menu-item-has-children"><a href="{% url "home" %}">Home</a></li>
+                                <li><a href="{% url "pets" %}">Pet List</a></li>
+                                {% if request.user.is_authenticated %}
+                                <li><a href="{% url "add_pet" %}">Add Pet</a></li>
+                                {% endif %}
+                                <li><a href="{% url "deposit" %}">Deposit</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="d-flex gap-3">
+                                {% if request.user.is_authenticated %}
+                                <li class="header-btn"><a href="{% url "account" %}" class="btn">Profile<img
+                                            src="{% static "img/icon/w_pawprint.png" %}" alt=""></a></li>
+                                <form action="{% url "logout" %}" method="post">
+                                    {% csrf_token %}
+                                    <li class="header-btn ml-3"><button class="btn">Logout<img
+                                                src="{% static "img/icon/w_pawprint.png" %}" alt=""></button></li>
+                                </form>
+                                {% else %}
+                                <li class="header-btn"><a href="{% url "login" %}" class="btn">Login<img
+                                            src="{% static "img/icon/w_pawprint.png" %}" alt=""></a></li>
+                                <li class="header-btn ml-3"><a href="{% url "register" %}" class="btn">Register<img
+                                            src="{% static "img/icon/w_pawprint.png" %}" alt=""></a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

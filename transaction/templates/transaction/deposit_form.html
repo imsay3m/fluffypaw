@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}<title>Deposit</title>{% endblock title %}
+{% block body %}
+<div class="container">
+    <h1>Deposit Money</h1>
+    <div>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <!-- Non Feilds Error -->
+            {% if form.non_field_errors %}
+            {% for err in form.non_field_errors %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{ err }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <button class="btn btn-warning my-2" type="submit">Deposit</button>
+        </form>
+    </div>
+</div>
+{% endblock body %}

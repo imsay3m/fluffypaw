@@ -1,0 +1,12 @@
+<div class="container my-2">
+    {% for m in messages %}
+    <div class="alert {% if m.tags == 'error' %}
+        alert-danger
+        {% else %}
+        alert-{{ m.tags }}
+        {% endif %} alert-dismissible fade show" role="alert">
+        <strong>{{ m }}</strong>
+        <button type="button" class="btn-close border-0 " data-bs-dismiss="alert" aria-label="Close">x</button>
+    </div>
+    {% endfor %}
+</div>

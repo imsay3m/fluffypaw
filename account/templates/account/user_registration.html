@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}<title>Login</title>{% endblock title %}
+{% block body %}
+<div class="container">
+    <h1>Register</h1>
+    <div>
+        <form method="post" novalidate enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <!-- Non Feilds Error -->
+            {% if form.non_field_errors %}
+            {% for err in form.non_field_errors %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{ err }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <button class="btn btn-warning my-2" type="submit">Register</button>
+            <p class="small text-muted">
+                Already have an account, <a class="text-decoration-none" href="{% url "login" %}">Login</a>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock body %}

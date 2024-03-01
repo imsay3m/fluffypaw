@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}<title>Pet List</title>{% endblock title %}
+{% block body %}
+<!-- breadcrumb-area -->
+<section class="breadcrumb-area breadcrumb-bg" data-background="{% static "img/bg/breadcrumb_bg.jpg" %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-content">
+                    <h2 class="title">Pet List</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url "home" %}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Pet List</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb-area-end -->
+
+<!-- adoption-shop-area -->
+<section class="adoption-shop-area">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-9">
+                <div class="section-title text-center mb-65">
+                    <div class="section-icon"><img src="{% static "img/icon/pawprint.png" %}" alt=""></div>
+                    <h5 class="sub-title">Meet the animals</h5>
+                    <h2 class="title">Puppies Waiting for Adoption</h2>
+                    <div class="dropdown mb-5">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Category
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="{% url 'pets' %}">All</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            {% for category in categories %}
+                            <li><a class="dropdown-item"
+                                    href="{% url "pet_list_by_category" category.slug %}">{{category.name}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center p-5">
+            {% for pet in pets %}
+            <div class="col-lg-4 col-md-6">
+                <div class="adoption-shop-item">
+                    <div class="adoption-shop-thumb">
+                        <img src="{{pet.image.url}}" alt="{{pet.name}}">
+                        <a href="{% url "pet_details" pet.id %}" class="btn">Adoption<img
+                                src="{% static "img/icon/w_pawprint.png" %}" alt=""></a>
+                    </div>
+                    <div class="adoption-shop-content">
+                        <h4 class="title"><a href="{% url "pet_details" pet.id %}">{{pet.name}}</a></h4>
+                        <div class="adoption-meta">
+                            <ul>
+                                {% for cat in pet.categories.all %}
+                                <li><i class="fas fa-cog"></i><a href="#">{{cat}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="adoption-rating">
+                            <ul>
+                                <li class="price">Total Price : {% if pet.price == 0  %}
+                                    <span>Free</span>
+                                    {% else %}
+                                    <span>{{pet.price}}</span>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- adoption-shop-area-end -->
+{% endblock body %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}<title>Account</title>{% endblock title %}
+{% block body %}
+<div class="container p-5">
+    <h1>Profile</h1>
+    <div class="card border-primary text-right mb-5 m-auto" style="max-width: 720px;">
+        <div class="row g-0 align-items-center ">
+            <div class="col-md-4">
+                <img src="{{request.user.account.image.url}}" class="img-fluid rounded" alt="request.user.first_name">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h4 class="card-title mb-1">Name: {{request.user.first_name}} {{request.user.last_name}}</h5>
+                        <h5 class="card-text mb-1"><small class="fw-bold text-info ">Username:
+                                {{request.user.username}}</small></h5>
+                        <h6 class="card-text">Email: {{request.user.email}}</h6>
+                        <h6 class="card-text">Balance: {{request.user.account.balance}}</h6>
+                        <a href="{% url "transaction_report" %}" class="btn btn-sm btn-primary mb-3">Show Transaction
+                            Report</a>
+                        <a href="{% url "edit_account" %}" class="btn btn-sm btn-primary mb-3">Edit Account</a>
+                        <a href="{% url "change_password" %}" class="btn btn-sm btn-primary mb-3">Change Password</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% comment %} {% include "accounts/borrowed_books.html" %} {% endcomment %}
+</div>
+{% endblock body %}

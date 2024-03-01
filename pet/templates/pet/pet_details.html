@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}<title>Pet Details</title>{% endblock title %}
+{% block body %}
+<!-- breadcrumb-area -->
+<section class="breadcrumb-area breadcrumb-bg" data-background="{% static "img/bg/breadcrumb_bg.jpg" %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-content">
+                    <h2 class="title">Pet Details</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url "home" %}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Pet Details</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb-area-end -->
+
+<!-- breeder-details-area -->
+<section class="breeder-details-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="breeder-details-content">
+                    <h4 class="title">{{pet.name}}</h4>
+                    <p>{{pet.description}}</p>
+                    <div class="text-center  breeder-details-img">
+                        <img src="{{pet.image.url}}" alt="">
+                    </div>
+                    <div class="breeder-dog-info">
+                        <h4 class="title">About Bio</h4>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-4 col-6">
+                                <div class="breeder-info-item">
+                                    <h6>Date of Birth:</h6>
+                                    <span>{{pet.date_of_birth}}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6">
+                                <div class="breeder-info-item">
+                                    <h6>Pet ID:</h6>
+                                    <span>{{pet.id}}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6">
+                                <div class="breeder-info-item">
+                                    <h6>Breed:</h6>
+                                    {% for cat in pet.categories.all %}
+                                    <span>{{cat}}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% if pet.adopter is None %}
+                        <a href="{% url "adopt_pet" pet.id %}" class="btn">Apply Today <img
+                                src="img/icon/w_pawprint.png" alt=""></a>
+                        {% else %}
+                        <a href="{% url "adopt_pet" pet.id %}" class="btn disabled ">Already Adopted <img
+                                src="img/icon/w_pawprint.png" alt=""></a>
+                        {% endif %}
+                    </div>
+                    {% if pet.adopter == request.user %}
+                    <div class="my-3">
+                        <div class="card border-dark">
+                            <div class="card-header">
+                                <h3>Add Review</h3>
+                            </div>
+                            <div class="card-body">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {{ form|crispy }}
+                                    <button class="btn btn-warning" type="submit">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="my-3">
+                        <div class="alert alert-primary" role="alert">Total Reviews: {{reviews|length}}</div>
+                        {% if reviews %}
+                        {% for review in reviews %}
+                        <div class="card mb-1">
+                            <div class="card-header">
+                                <h5>{{review.user.first_name}}</h5>
+                                <p class="card-title text-info">{{review.user.email}} <small
+                                        class="blockquote-footer">Reviewed
+                                        On: <cite class="text-primary" title="Source Title">{{review.created_on}}</cite>
+                                    </small></p>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-text">{{review.body}}</h6>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</section>
+<!-- breeder-details-area-end -->
+{% endblock body %}
