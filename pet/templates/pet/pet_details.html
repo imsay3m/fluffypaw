@@ -57,6 +57,16 @@
                                     {% endfor %}
                                 </div>
                             </div>
+                            <div class="col-md-3 col-sm-4 col-6">
+                                <div class="breeder-info-item">
+                                    <h6>Pet Price:</h6>
+                                    {% if pet.price == 0  %}
+                                    <span>Free</span>
+                                    {% else %}
+                                    <span>{{pet.price}}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
                         {% if pet.adopter is None %}
                         <a href="{% url "adopt_pet" pet.id %}" class="btn">Apply Today <img

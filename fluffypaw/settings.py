@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import dj_database_url
-# from django.conf.global_settings import PASSWORD_RESET_TIMEOUT
 import environ
 env = environ.Env()
 environ.Env.read_env()
@@ -90,21 +89,16 @@ WSGI_APPLICATION = "fluffypaw.wsgi.application"
 
 
 # DATABASES = {
-# 'default': {
-# 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-# 'NAME': 'your_db_name',
-# 'USER': 'postgres',
-# 'PASSWORD': 'your_db_password',
-# 'HOST': 'localhost',
-# 'PORT': '5432',
-# }
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
 # }
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+DATABASES={
+    'default': dj_database_url.config(
+        default=env('EXTERNAL_DATABASE_URL'),
+        )
 }
 
 
@@ -112,7 +106,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your_email@example.com'
 EMAIL_HOST_USER = env("MAIL_USER")
 EMAIL_HOST_PASSWORD = env("MAIL_PASSWORD")
 

@@ -65,7 +65,7 @@
 13. Run migration
     - <code>python manage.py migrate</code>
 
-14. Create superuser for authenficiation/admin panel
+14. Create superuser for authentication/admin panel
     - <code>python manage.py createsuperuser</code>
 
 15. psycopg2 installation for PostgreSql
@@ -106,7 +106,10 @@
 
 17. Django Media Files
     - settings.py<br>
-    <code>import os<br>BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))<br>MEDIA_ROOT = os.path.join(BASE_DIR, 'media')<br>MEDIA_URL='/media/'</code>
+    <code>import os<br>
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))<br>
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')<br>
+    MEDIA_URL='/media/'</code>
 
     - urls.py<br>
     <code>from django.conf import settings<br>
